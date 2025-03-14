@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dog Shelter Questionnaire</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Questionnaire for {{ match.dog_name }}</h1>
+    <p>Dog Size: {{ match.dog_size }}, Age: {{ match.dog_age }}, Energy Level: {{ match.dog_energy }}</p>
+    <p>Progress: {{ match_index + 1 }} of {{ total_matches }}</p>
+    
+    <form method="POST">
+        {% for shelter in shelters %}
+        <div class="shelter-section">
+            <h2>{{ shelter }}</h2>
+            
+            {% if shelter.startswith('Shelter 1') %}
+                <div class="question">
+                    <label for="{{ shelter }}_q1">When did you first meet this dog?</label>
+                    <input type="text" name="{{ shelter }}_q1" required>
+                </div>
+                <div class="question">
+                    <label for="{{ shelter }}_q2">Does this dog enjoy playing outdoors?</label>
+                    <input type="text" name="{{ shelter }}_q2" required>
+                </div>
+                <div class="question">
+                    <label for="{{ shelter }}_q3">Is this dog good with children?</label>
+                    <input type="text" name="{{ shelter }}_q3" required>
+                </div>
+                <div class="question">
+                    <label for="{{ shelter }}_q4">Does this dog have any allergies?</label>
+                    <input type="text" name="{{ shelter }}_q4" required>
+                </div>
+                <div class="question">
+                    <label for="{{ shelter }}_q5">What is this dog's favorite activity?</label>
+                    <input type="text" name="{{ shelter }}_q5" required>
+                </div>
+            {% elif shelter.startswith('Shelter 2') %}
+                <div class="question">
+                    <label for="{{ shelter }}_q1">How long have you known this dog?</label>
+                    <input type="text" name="{{ shelter }}_q1" required>
+                </div>
+                <div class="question">
+                    <label for="{{ shelter }}_q2">Does this dog need any special care?</label>
+                    <input type="text" name="{{ shelter }}_q2" required>
+                </div>
+                <div class="question">
+                    <label for="{{ shelter }}_q3">Is this dog comfortable around older people?</label>
+                    <input type="text" name="{{ shelter }}_q3" required>
+                </div>
+                <div class="question">
+                    <label for="{{ shelter }}_q4">Does this dog have any medical conditions?</label>
+                    <input type="text" name="{{ shelter }}_q4" required>
+                </div>
+                <div class="question">
+                    <label for="{{ shelter }}_q5">What type of food does this dog prefer?</label>
+                    <input type="text" name="{{ shelter }}_q5" required>
+                </div>
+            {% else %}
+                <div class="question">
+                    <label for="{{ shelter }}_q1">When was the last time you walked this dog?</label>
+                    <input type="text" name="{{ shelter }}_q1" required>
+                </div>
+                <div class="question">
+                    <label for="{{ shelter }}_q2">Does this dog get along with other large dogs?</label>
+                    <input type="text" name="{{ shelter }}_q2" required>
+                </div>
+                <div class="question">
+                    <label for="{{ shelter }}_q3">Has this dog undergone any training?</label>
+                    <input type="text" name="{{ shelter }}_q3" required>
+                </div>
+                <div class="question">
+                    <label for="{{ shelter }}_q4">Does this dog require a lot of exercise?</label>
+                    <input type="text" name="{{ shelter }}_q4" required>
+                </div>
+                <div class="question">
+                    <label for="{{ shelter }}_q5">What is this dog's favorite toy?</label>
+                    <input type="text" name="{{ shelter }}_q5" required>
+                </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        
+        <button type="submit">Save and Continue</button>
+    </form>
+</body>
+</html>

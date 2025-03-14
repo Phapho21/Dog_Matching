@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dog Shelter Matching Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        h1 {
+            color: #3c5d6e;
+            text-align: center;
+        }
+        
+        .result-card {
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        
+        .shelter-responses {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #3c5d6e;
+            color: white;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .btn:hover {
+            background-color: #2a4252;
+        }
+        
+        .download-options {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #e9f5ff;
+            border-radius: 5px;
+        }
+        
+        ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dog-Shelter Matching Results</h1>
+    
+    <div class="results">
+        {% if matches %}
+            {% for match in matches %}
+                <div class="result-card">
+                    <h2>{{ match.dog_name }}</h2>
+                    <p>Size: {{ match.dog_size }}, Age: {{ match.dog_age }}, Energy: {{ match.dog_energy }}</p>
+                    
+                    <h3>Matching Shelters:</h3>
+                    <ul>
+                        {% for shelter in match.shelters %}
+                            <li>{{ shelter }}</li>
+                        {% endfor %}
+                    </ul>
+                    
+                    <h3>Questionnaire Responses:</h3>
+                    {% if match.get('responses') %}
+                        {% for shelter, responses in match.responses.items() %}
+                            <div class="shelter-responses">
+                                <h4>{{ shelter }}</h4>
+                                <ul>
+                                    {% for question, answer in responses.items() %}
+                                        <li><strong>{{ question }}</strong>: {{ answer }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p>No questionnaire responses available.</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No matching results found.</p>
+        {% endif %}
+    </div>
+    
+    <div class="download-options">
+        <h3>Download Results:</h3>
+        <a href="{{ url_for('download_report') }}" class="btn">Download CSV</a>
+        <a href="{{ url_for('download_excel') }}" class="btn">Download Excel</a>
+        <a href="{{ url_for('download_pdf') }}" class="btn">Download PDF</a>
+    </div>
+    
+    <div style="margin-top: 30px;">
+        <a href="{{ url_for('index') }}" class="btn">Start New Matching</a>
+    </div>
+</body>
+</html>
